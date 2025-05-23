@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c1kvkv8wnmkly"
+path="res://.godot/imported/base.obj-8cdfbc696ea2330f2d817084d33a343f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/base.obj-8cdfbc696ea2330f2d817084d33a343f.mesh"]
+
+source_file="res://assets/ak47/Shaded/base.obj"
+dest_files=["res://.godot/imported/base.obj-8cdfbc696ea2330f2d817084d33a343f.mesh", "res://.godot/imported/base.obj-8cdfbc696ea2330f2d817084d33a343f.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://r5i1pdw22jdq"]
+
+[ext_resource type="Texture2D" uid="uid://bg72rugosikos" path="res://assets/skybox/test_sky/test_sky_panorama.png" id="1_4vuk6"]
+[ext_resource type="PackedScene" uid="uid://cqdroek13gm4y" path="res://scenes/PLAYER.tscn" id="2_i2mmn"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7yjjm"]
+friction = 0.69
+rough = true
+absorbent = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0dmyi"]
+radius = 21.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ullog"]
+top_radius = 21.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fleip"]
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.26
+roughness_texture_channel = 1
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_74fni"]
+panorama = ExtResource("1_4vuk6")
+
+[sub_resource type="Sky" id="Sky_mip6b"]
+sky_material = SubResource("PanoramaSkyMaterial_74fni")
+
+[sub_resource type="Environment" id="Environment_bn27i"]
+background_mode = 2
+sky = SubResource("Sky_mip6b")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="floor" type="StaticBody3D" parent="."]
+transform = Transform3D(3.44303, 0, 0, 0, 9, 0, 0, 0, 3.78701, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_7yjjm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+shape = SubResource("CylinderShape3D_0dmyi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+mesh = SubResource("CylinderMesh_ullog")
+surface_material_override/0 = SubResource("StandardMaterial3D_fleip")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bn27i")
+
+[node name="Node3D" parent="." instance=ExtResource("2_i2mmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 10.2095, 17.974)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0389634, 0.999241, 0, -0.999241, 0.0389634, 0, 47.8926, 0)
+light_energy = 16.0

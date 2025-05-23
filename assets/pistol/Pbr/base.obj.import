@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dkjyc8d3vm08k"
+path="res://.godot/imported/base.obj-5710ef6cbfb9cc8a060908a3705e4f89.mesh"
+
+[deps]
+
+files=["res://.godot/imported/base.obj-5710ef6cbfb9cc8a060908a3705e4f89.mesh"]
+
+source_file="res://assets/pistol/Pbr/base.obj"
+dest_files=["res://.godot/imported/base.obj-5710ef6cbfb9cc8a060908a3705e4f89.mesh", "res://.godot/imported/base.obj-5710ef6cbfb9cc8a060908a3705e4f89.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -1,0 +1,135 @@
+[gd_scene load_steps=14 format=3 uid="uid://bt51orjklk5d0"]
+
+[ext_resource type="ArrayMesh" uid="uid://c1kvkv8wnmkly" path="res://assets/ak47/Shaded/base.obj" id="1_obj5w"]
+[ext_resource type="Texture2D" uid="uid://do165k2a3umou" path="res://assets/ak47/Shaded/shaded.png" id="2_fkkwy"]
+[ext_resource type="Texture2D" uid="uid://bqt6g8lvn1gx7" path="res://assets/ak47/Pbr/texture_metallic.png" id="3_1daax"]
+[ext_resource type="Texture2D" uid="uid://c7ju57l2en64a" path="res://assets/ak47/Pbr/texture_roughness.png" id="4_ikgjh"]
+[ext_resource type="Script" path="res://scripts/assault_rifle.gd" id="5_ignbr"]
+[ext_resource type="PackedScene" uid="uid://ceq5h7egel4bk" path="res://scenes/muzzle_flash.tscn" id="6_g7nvp"]
+[ext_resource type="AudioStream" uid="uid://cflekwerq2e0o" path="res://sounds/ak_47_gtasa_single_shot.wav" id="6_ts587"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lytw"]
+albedo_texture = ExtResource("2_fkkwy")
+metallic = 1.0
+metallic_texture = ExtResource("3_1daax")
+roughness_texture = ExtResource("4_ikgjh")
+clearcoat_enabled = true
+clearcoat_roughness = 1.0
+
+[sub_resource type="Animation" id="Animation_2i7mi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("muzzle_flash:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_b2rre"]
+resource_name = "fire"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.0395214, 1, 0, 0, -0.0934494, 0.1, 1, 0, 0, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.0395214, 1, -0.0338355, 0, 0, 0.999427, 0.1, 1, 0, 0, 0, 1)
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fire")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_ts587")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("muzzle_flash:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5sbdj"]
+resource_name = "idle"
+length = 1.1
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.6, 1, 0, 0.0354542, 0, 1.1, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_qu3sb"]
+resource_name = "sprint"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.0828664, 0.702234, -0.0828664, 0.702234, 0.5, 1, 0.0828664, 0.702234, -0.0828664, 0.702234)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.1, 1, 0, 0.0289962, 0, 0.4, 1, 0, -0.0812131, 0, 0.5, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4m6d2"]
+_data = {
+"RESET": SubResource("Animation_2i7mi"),
+"fire": SubResource("Animation_b2rre"),
+"idle": SubResource("Animation_5sbdj"),
+"sprint": SubResource("Animation_qu3sb")
+}
+
+[node name="assault_rifle" type="Node3D"]
+
+[node name="rifle" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_obj5w")
+surface_material_override/0 = SubResource("StandardMaterial3D_2lytw")
+script = ExtResource("5_ignbr")
+
+[node name="muzzle_flash" parent="rifle" instance=ExtResource("6_g7nvp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.498649, 0.961203)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="rifle"]
+libraries = {
+"": SubResource("AnimationLibrary_4m6d2")
+}
+
+[node name="fire" type="AudioStreamPlayer3D" parent="rifle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525608, 0.828971)
