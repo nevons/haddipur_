@@ -3,10 +3,13 @@ extends CharacterBody3D
 
 #speed var
 var speed 
-var CROUCH_SPEED = 2.0
-const WALK_SPEED = 5.0
-const SPRINT_SPEED = 12.0
-const JUMP_VELOCITY = 4.5
+@export_range(5,10,0.1) var CROUCH_SPEED : float = 7.0
+@export var CROUCHED_SPEED = 3.0
+@export var WALK_SPEED = 7.0
+@export var SPRINT_SPEED = 12.0
+@export var JUMP_VELOCITY = 4.5
+
+var _is_crouching : bool = false
 
 const sensitivity = 0.05
 
@@ -22,9 +25,10 @@ var t_bob = 0.0
 #references
 @onready var head = $Head
 @onready var cam = $Head/Camera3D
+@onready var pcap = $CollisionShape3D
+@onready var  anims= $AnimationPlayer
+@onready var headbbonker = $HEADBONKER
 
-#weapon refs
-@onready var assault_rifle = $weapon_stash/assault_rifle
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -34,6 +38,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
+	#headbonker exception is us!
+	headbbonker.add_exception($".")
 	
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -66,10 +72,13 @@ func _physics_process(delta):
 	t_bob= delta * velocity.length() *float(is_on_floor())
 	cam.transform.origin = _headbob(t_bob)
 	
+	
+	#speed and movement
 	if Input.is_action_pressed("sprint"):
 		speed=SPRINT_SPEED
-	elif Input.is_action_pressed("slow"):
-		speed=CROUCH_SPEED
+	elif Input.is_action_just_pressed("crouch"):
+		_toggle_crouch()
+			
 	else:
 		speed=WALK_SPEED 
 	
@@ -95,10 +104,22 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
+func _toggle_crouch():
 	
+	if _is_crouching==true and headbbonker.is_colliding()==false:
+		anims.play("crouch",-1,-CROUCH_SPEED,true)
+		speed=WALK_SPEED
+	elif _is_crouching == false:
+		anims.play("crouch",-1,CROUCH_SPEED)
+		speed=CROUCHED_SPEED
+
 func _headbob(delta) -> Vector3:
 		var pos= Vector3.ZERO
 		pos.y = 4*sin(delta*bob_frq)*bob_amp
 		pos.x = 4*cos(delta * bob_frq) *bob_amp
 		return pos
 
+func _on_animation_player_animation_started(anim_name):
+	if anim_name == "crouch":
+		_is_crouching=!_is_crouching
+		

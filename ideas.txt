@@ -1,0 +1,4 @@
+- import all weapons
+- weapon switching and management
+-HUD
+

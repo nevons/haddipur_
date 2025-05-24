@@ -49,5 +49,19 @@ environment = SubResource("Environment_bn27i")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 10.2095, 17.974)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0389634, 0.999241, 0, -0.999241, 0.0389634, 0, 47.8926, 0)
+transform = Transform3D(1, 0, 0, 0, 0.329032, 0.944319, 0, -0.944319, 0.329032, 0, 47.8926, 68.3088)
 light_energy = 16.0
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.183917, 0.982942, 0, -0.982942, -0.183917, -0.509296, 47.8926, -80.994)
+light_energy = 16.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.9837, 0)
+light_energy = 7.949
+light_indirect_energy = 1.646
+light_size = 0.152
+light_bake_mode = 1
+omni_range = 91.41
+omni_attenuation = 0.420448
+omni_shadow_mode = 0
