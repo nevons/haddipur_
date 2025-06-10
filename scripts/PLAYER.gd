@@ -4,8 +4,8 @@ extends CharacterBody3D
 
 #speed var
 var speed 
-@export_range(5,10,0.1) var CROUCH_SPEED : float = 7.0
-@export var CROUCHED_SPEED = 1.0
+#@export_range(5,10,0.1) var CROUCH_SPEED : float = 7.0
+#@export var CROUCHED_SPEED = 1.0
 @export var WALK_SPEED = 7.0
 @export var SPRINT_SPEED = 12.0
 @export var JUMP_VELOCITY = 4.5
@@ -15,7 +15,7 @@ var speed
 @export var DRAW_DISTANCE = 5
 
 
-var _is_crouching : bool = false
+#var _is_crouching : bool = false
 
 const sensitivity = 0.05
 
@@ -72,8 +72,8 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+#	if Input.is_action_just_pressed("jump") and is_on_floor():
+#		velocity.y = JUMP_VELOCITY
 	
 #	#Cam bob
 #	t_bob= delta * velocity.length() *float(is_on_floor())
@@ -84,8 +84,8 @@ func _physics_process(delta):
 	if Input.is_action_pressed("sprint"):
 		speed=SPRINT_SPEED
 		
-	elif Input.is_action_just_pressed("crouch"):
-		_toggle_crouch()
+#	elif Input.is_action_just_pressed("crouch"):
+#		_toggle_crouch()
 		
 	
 	else:
@@ -115,16 +115,16 @@ func _physics_process(delta):
 	
 	
 # crouch functionality
-func _toggle_crouch():
-	if _is_crouching==true and headbbonker.is_colliding()==false:
-		anims.play("crouch",-1,-CROUCH_SPEED,true)
-	elif _is_crouching == false:
-		anims.play("crouch",-1,CROUCH_SPEED)
-		
-#crouch signal
-func _on_animation_player_animation_started(anim_name):
-	if anim_name == "crouch":
-		_is_crouching=!_is_crouching
+#func _toggle_crouch():
+#	if _is_crouching==true and headbbonker.is_colliding()==false:
+#		anims.play("crouch",-1,-CROUCH_SPEED,true)
+#	elif _is_crouching == false:
+#		anims.play("crouch",-1,CROUCH_SPEED)
+#
+##crouch signal
+#func _on_animation_player_animation_started(anim_name):
+#	if anim_name == "crouch":
+#		_is_crouching=!_is_crouching
 
 ##headbob
 #func _headbob(delta) -> Vector3:
