@@ -1,0 +1,11 @@
+Model Information:
+* title:	Realistic Europan Tree
+* source:	https://sketchfab.com/3d-models/realistic-europan-tree-f2c2271c1cdb4db298f5f4e7b5896a1c
+* author:	BazukaliKartal (https://sketchfab.com/BazukaliKartal)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Realistic Europan Tree" (https://sketchfab.com/3d-models/realistic-europan-tree-f2c2271c1cdb4db298f5f4e7b5896a1c) by BazukaliKartal (https://sketchfab.com/BazukaliKartal) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

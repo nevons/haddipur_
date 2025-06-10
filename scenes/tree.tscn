@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx76nmigdok08"]
+
+[ext_resource type="PackedScene" uid="uid://d0jmr1ai17ncd" path="res://assets/realistic_europan_tree/scene.gltf" id="1_f8vws"]
+[ext_resource type="Script" path="res://scripts/rendered_obj.gd" id="2_ngggu"]
+
+[node name="tree" type="Node3D"]
+process_mode = 3
+transform = Transform3D(0.995556, 0, 0, 0, 0.995556, 0, 0, 0, 0.995556, 0, 0, 0)
+script = ExtResource("2_ngggu")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+process_mode = 3
+transform = Transform3D(6.07523, 0, 0, 0, 5.42524, 0, 0, 0, 6.55412, 0, 5.4957, 0)
+aabb = AABB(-1.19649, -1, -1, 2.39299, 2, 2)
+
+[node name="scene" parent="." instance=ExtResource("1_f8vws")]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.98707e-08, 0)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

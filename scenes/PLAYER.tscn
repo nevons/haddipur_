@@ -1,11 +1,21 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqdroek13gm4y"]
+[gd_scene load_steps=19 format=3 uid="uid://cqdroek13gm4y"]
 
 [ext_resource type="Script" path="res://scripts/PLAYER.gd" id="1_r53wf"]
 [ext_resource type="Script" path="res://scripts/Reticle.gd" id="2_wwg6x"]
+[ext_resource type="Theme" uid="uid://dxsearorlqkp2" path="res://ui/themes/theme_!.tres" id="3_4cat3"]
+[ext_resource type="Script" path="res://scripts/debug.gd" id="4_cmpca"]
+[ext_resource type="Script" path="res://scripts/state_machine.gd" id="5_eebjp"]
+[ext_resource type="Script" path="res://scripts/PlayerWalkingState.gd" id="6_g6e11"]
+[ext_resource type="Script" path="res://scripts/PlayerIdleState.gd" id="6_mki1e"]
+[ext_resource type="Script" path="res://scripts/PlayerSprintingState.gd" id="8_ovcjo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a1u3h"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_e72px"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_2j8uy"]
+
+[sub_resource type="GDScript" id="GDScript_b2dfo"]
 
 [sub_resource type="Animation" id="Animation_kfllp"]
 length = 0.001
@@ -45,6 +55,39 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector3(0, 0.266513, 0)]
 }
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Head:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Head:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.643221, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Head:position:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_hjsjj"]
 resource_name = "crouch"
@@ -82,27 +125,67 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0.266513, 0), Vector3(0, 0.0211957, 0)]
+"values": [Vector3(0, 0.643221, 0), Vector3(0, 0.0211957, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c5biv"]
+resource_name = "sprinting"
+
+[sub_resource type="Animation" id="Animation_vv3x7"]
+resource_name = "walking"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.0293655, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.029, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0.643221, -0.25, 0, 0.25, 0, 0.672907, -0.25, 0, 0.25, 0, 0.643221, -0.25, 0, 0.25, 0, 0.613, -0.25, 0, 0.25, 0, 0.643, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Head:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vrrui"]
 _data = {
 "RESET": SubResource("Animation_kfllp"),
-"crouch": SubResource("Animation_hjsjj")
+"crouch": SubResource("Animation_hjsjj"),
+"sprinting": SubResource("Animation_c5biv"),
+"walking": SubResource("Animation_vv3x7")
 }
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_lny2x"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_3wjtx"]
-radius = 5.0
-height = 5.0
-is_hemisphere = true
 
 [node name="Node3D" type="Node3D"]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 floor_stop_on_slope = false
 script = ExtResource("1_r53wf")
+JUMP_VELOCITY = 5.0
+DRAW_DISTANCE = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_a1u3h")
@@ -111,12 +194,17 @@ shape = SubResource("CapsuleShape3D_a1u3h")
 mesh = SubResource("CapsuleMesh_e72px")
 
 [node name="Head" type="Node3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.266513, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.643221, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D/Head"]
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CharacterBody3D/Head/Camera3D"]
 update_mode = 1
+
+[node name="DRAW_PLANE" type="ShapeCast3D" parent="CharacterBody3D/Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.643, -9.75)
+shape = SubResource("WorldBoundaryShape3D_2j8uy")
+script = SubResource("GDScript_b2dfo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D"]
 libraries = {
@@ -138,7 +226,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Reticle" type="CenterContainer" parent="CharacterBody3D/UI"]
+[node name="Reticle" type="CenterContainer" parent="CharacterBody3D/UI" node_paths=PackedStringArray("player_controller")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -152,6 +240,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_wwg6x")
+player_controller = NodePath("../..")
 
 [node name="left" type="Line2D" parent="CharacterBody3D/UI/Reticle"]
 points = PackedVector2Array(-5, 0, -15, 0)
@@ -161,13 +250,33 @@ width = 1.0
 points = PackedVector2Array(5, 0, 15, 0)
 width = 1.0
 
-[node name="top_hemi" type="MeshInstance2D" parent="CharacterBody3D/UI/Reticle"]
-position = Vector2(0, -4)
-rotation = 3.14159
-mesh = SubResource("SphereMesh_3wjtx")
+[node name="DebugPanel" type="PanelContainer" parent="CharacterBody3D/UI"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 60.0
+theme = ExtResource("3_4cat3")
+script = ExtResource("4_cmpca")
 
-[node name="bottom_hemi" type="MeshInstance2D" parent="CharacterBody3D/UI/Reticle"]
-position = Vector2(0, 4)
-mesh = SubResource("SphereMesh_3wjtx")
+[node name="MarginContainer" type="MarginContainer" parent="CharacterBody3D/UI/DebugPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterBody3D/UI/DebugPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerStateMachine" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("5_eebjp")
+CURRENT_STATE = NodePath("PlayerIdleState")
+
+[node name="PlayerWalkingState" type="Node" parent="CharacterBody3D/PlayerStateMachine"]
+script = ExtResource("6_g6e11")
+
+[node name="PlayerIdleState" type="Node" parent="CharacterBody3D/PlayerStateMachine"]
+script = ExtResource("6_mki1e")
+
+[node name="PlayerSprintingState" type="Node" parent="CharacterBody3D/PlayerStateMachine"]
+script = ExtResource("8_ovcjo")
 
 [connection signal="animation_started" from="CharacterBody3D/AnimationPlayer" to="CharacterBody3D" method="_on_animation_player_animation_started"]

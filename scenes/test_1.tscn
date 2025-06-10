@@ -1,11 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cays0oyyojklw"]
+[gd_scene load_steps=13 format=3 uid="uid://cays0oyyojklw"]
 
 [ext_resource type="PackedScene" uid="uid://cqdroek13gm4y" path="res://scenes/PLAYER.tscn" id="1_4ewnv"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c7ha6"]
-friction = 0.89
-rough = true
-bounce = 0.28
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vngd6"]
 
@@ -20,22 +15,33 @@ gradient = SubResource("Gradient_dgwqu")
 albedo_color = Color(0.498039, 0.498039, 0.498039, 1)
 albedo_texture = SubResource("GradientTexture1D_aglgx")
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c7ha6"]
+friction = 0.89
+rough = true
+bounce = 0.28
+
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_p6hvc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0igsf"]
 albedo_color = Color(0.572549, 0.517647, 0.784314, 1)
 albedo_texture = SubResource("GradientTexture1D_p6hvc")
 
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_ehvl7"]
+
+[sub_resource type="Sky" id="Sky_jil6u"]
+sky_material = SubResource("PhysicalSkyMaterial_ehvl7")
+
 [sub_resource type="Environment" id="Environment_v5eoh"]
+sky = SubResource("Sky_jil6u")
 ambient_light_source = 3
 ambient_light_color = Color(0.980392, 0.980392, 0.980392, 1)
 ambient_light_energy = 7.99
+glow_enabled = true
 
 [node name="test_1" type="Node3D"]
 
 [node name="floor" type="StaticBody3D" parent="."]
-transform = Transform3D(3.47846, 0, 0, 0, 1, 0, 0, 0, 3.57826, 0, 0, 0)
-physics_material_override = SubResource("PhysicsMaterial_c7ha6")
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10.288, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
 transform = Transform3D(10, 0, 0, 0, 0.5, 0, 0, 0, 10, 0, 0, 0)
@@ -87,11 +93,9 @@ text = "TOO LOW"
 [node name="PLAYER" parent="." instance=ExtResource("1_4ewnv")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.759288, 5.37457)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.28823, 0)
-light_energy = 16.0
-omni_range = 39.216
-omni_shadow_mode = 0
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_v5eoh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.797131, 0.603806, 0, -0.603806, -0.797131, 0, 8.03189, -7.52329)
+light_energy = 5.712
